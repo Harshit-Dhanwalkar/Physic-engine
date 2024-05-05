@@ -1,17 +1,24 @@
-# FIX:
-# TODO:
+# FIXME: Ensure distance between particles is not zero to prevent ZeroDivisionError
+# TODO: Implement collision detection and response
+# TODO: Add visualization for gravitational forces
+# TODO: Allow customization of simulation parameters through user input or configuration file
+# TODO: Implement 3D visualization for particle trajectories
+# TODO: Add support for additional force types such as friction or electrostatic forces
 
+import matplotlib.pyplot as plt
 from utilities.particle import Particle
 from utilities.gravity import calculate_gravity
 from utilities.projectile import calculate_projectile_trajectory
 from utilities.simulation import Simulation
 from utilities.vector import Vector
-import matplotlib.pyplot as plt
+from utilities.particle_animation import animate_particle_trajectories
+
 
 print("hello from main 1")
 
-
 # Function to stimulate particle movement
+
+
 def stimulate_simulation(simulation, total_time, dt):
     num_steps = int(total_time / dt)
     positions = [[] for _ in range(len(simulation.particles))]
@@ -36,16 +43,15 @@ def create_particles(num_particles, particle_params):
         particles.append(particle)
     return particles
 
+# Define particle parameters, create particles, and initialize the simulation
 
-# Define particle parameters
+
 particle_params = {'mass': 10, 'position': (0, 0), 'velocity': (10, 0)}
 num_particles = 2
-
-# Create particles
 particles = create_particles(num_particles, particle_params)
-
-# Create simulation
 simulation = Simulation()
+
+# Add particles to the simulation
 for particle in particles:
     simulation.add_particle(particle)
 
@@ -54,18 +60,12 @@ total_time = 10
 dt = 0.01
 positions = stimulate_simulation(simulation, total_time, dt)
 
-# Plot particle trajectories
+# Ask the user if they want to animate the particle trajectories
+user_input = input("Do you want to animate the particle trajectories? (y/n): ")
+if user_input.lower() == "y":
+    animate_particle_trajectories(positions, num_particles)
+else:
+    print("Particle trajectories will not be animated.")
 
-for i, particle_positions in enumerate(positions):
-    x = [pos[0] for pos in particle_positions]
-    y = [pos[1] for pos in particle_positions]
-    plt.plot(x, y, label=f'Particle {i+1}')
-
-plt.xlabel('X position')
-plt.ylabel('Y position')
-plt.title('Particle Trajectories')
-plt.legend()
-plt.grid(True)
-plt.show()
 
 print("hello from main 2")
