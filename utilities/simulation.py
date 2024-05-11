@@ -1,4 +1,4 @@
-# In utilities/simulation.py
+# simulation.py
 
 from .vector import Vector
 from .gravity import calculate_gravity

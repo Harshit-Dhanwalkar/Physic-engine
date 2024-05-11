@@ -1,3 +1,5 @@
+# particle.py
+
 from .vector import Vector
 
 

@@ -1,3 +1,5 @@
+# main.py
+
 # FIXME: Ensure distance between particles is not zero to prevent ZeroDivisionError
 # TODO: Implement collision detection and response
 # TODO: Add visualization for gravitational forces
@@ -5,6 +7,7 @@
 # TODO: Implement 3D visualization for particle trajectories
 # TODO: Add support for additional force types such as friction or electrostatic forces
 
+from logging import exception
 import matplotlib.pyplot as plt
 from utilities.particle import Particle
 from utilities.gravity import calculate_gravity
@@ -46,14 +49,15 @@ def create_particles(num_particles, particle_params):
 # Define particle parameters, create particles, and initialize the simulation
 
 
-particle_params = {'mass': 10, 'position': (0, 0), 'velocity': (10, 0)}
-num_particles = 2
+particle_params = {'mass': 10, 'position': (0, 0), 'velocity': (15, 0)}
+num_particles = 1
 particles = create_particles(num_particles, particle_params)
 simulation = Simulation()
 
 # Add particles to the simulation
 for particle in particles:
     simulation.add_particle(particle)
+
 
 # Stimulate simulation
 total_time = 10
@@ -63,9 +67,11 @@ positions = stimulate_simulation(simulation, total_time, dt)
 # Ask the user if they want to animate the particle trajectories
 user_input = input("Do you want to animate the particle trajectories? (y/n): ")
 if user_input.lower() == "y":
-    animate_particle_trajectories(positions, num_particles)
+    try:
+        animate_particle_trajectories(positions, num_particles)
+    except AttributeError:
+        print(" ")
 else:
     print("Particle trajectories will not be animated.")
-
 
 print("hello from main 2")
